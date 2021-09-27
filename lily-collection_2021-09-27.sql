@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.35)
 # Database: lily-collection
-# Generation Time: 2021-09-27 11:13:44 +0000
+# Generation Time: 2021-09-27 12:49:42 +0000
 # ************************************************************
 
 
@@ -21,36 +21,36 @@ SET NAMES utf8mb4;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Dump of table collection-items
+# Dump of table lego-sets
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `collection-items`;
+DROP TABLE IF EXISTS `lego-sets`;
 
-CREATE TABLE `collection-items` (
+CREATE TABLE `lego-sets` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `itemName` varchar(255) NOT NULL DEFAULT '',
-  `imageURL` varchar(255) DEFAULT NULL,
-  `numberOfPieces` smallint(6) NOT NULL,
-  `ageCategory` varchar(10) NOT NULL DEFAULT '',
-  `starRating` float(2,1) NOT NULL,
-  `buyURL` varchar(255) DEFAULT NULL,
-  `retired` enum('yes','no') NOT NULL DEFAULT 'no',
+  `item-name` varchar(255) NOT NULL DEFAULT '',
+  `image-URL` varchar(255) DEFAULT NULL,
+  `number-of-pieces` smallint(6) NOT NULL,
+  `age-category` varchar(10) NOT NULL DEFAULT '',
+  `star-rating` float(2,1) NOT NULL,
+  `buy-URL` varchar(255) DEFAULT NULL,
+  `retired` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-LOCK TABLES `collection-items` WRITE;
-/*!40000 ALTER TABLE `collection-items` DISABLE KEYS */;
+LOCK TABLES `lego-sets` WRITE;
+/*!40000 ALTER TABLE `lego-sets` DISABLE KEYS */;
 
-INSERT INTO `collection-items` (`id`, `itemName`, `imageURL`, `numberOfPieces`, `ageCategory`, `starRating`, `buyURL`, `retired`)
+INSERT INTO `lego-sets` (`id`, `item-name`, `image-URL`, `number-of-pieces`, `age-category`, `star-rating`, `buy-URL`, `retired`)
 VALUES
-	(1,'Hogwarts Castle','hogwartsCastle.jpeg',6020,'16+',5.0,'https://www.lego.com/en-gb/product/hogwarts-castle-71043','no'),
-	(2,'Diagon Alley','diagonAlley.jpg',5544,'16+',4.5,'https://www.lego.com/en-gb/product/diagon-alley-75978','no'),
-	(3,'Hogwarts Express','hogwartsExpress.jpeg',801,'8-14',4.5,'https://www.lego.com/en-gb/product/hogwarts-express-75955','no'),
-	(4,'The Knight Bus','knightBus.jpeg',403,'8+',4.5,'https://www.lego.com/en-gb/product/the-knight-bus-75957','no'),
-	(5,'Quidditch Match','quidditchMatch.jpeg',500,'7-14',4.5,'https://www.lego.com/en-gb/product/quidditch-match-75956','yes'),
-	(6,'Attack on the Burrow','theBurrow.jpeg',1047,'9+',4.5,'https://www.lego.com/en-gb/product/attack-on-the-burrow-75980','no');
+	(1,'Hogwarts Castle','hogwartsCastle.jpeg',6020,'16+',5.0,'https://www.lego.com/en-gb/product/hogwarts-castle-71043',0),
+	(2,'Diagon Alley','diagonAlley.jpg',5544,'16+',4.5,'https://www.lego.com/en-gb/product/diagon-alley-75978',0),
+	(3,'Hogwarts Express','hogwartsExpress.jpeg',801,'8-14',4.5,'https://www.lego.com/en-gb/product/hogwarts-express-75955',0),
+	(4,'The Knight Bus','knightBus.jpeg',403,'8+',4.5,'https://www.lego.com/en-gb/product/the-knight-bus-75957',0),
+	(5,'Quidditch Match','quidditchMatch.jpeg',500,'7-14',4.5,'https://www.lego.com/en-gb/product/quidditch-match-75956',1),
+	(6,'Attack on the Burrow','theBurrow.jpeg',1047,'9+',4.5,'https://www.lego.com/en-gb/product/attack-on-the-burrow-75980',0);
 
-/*!40000 ALTER TABLE `collection-items` ENABLE KEYS */;
+/*!40000 ALTER TABLE `lego-sets` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
