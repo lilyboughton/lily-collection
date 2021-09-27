@@ -16,4 +16,8 @@ bin-release/
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
+<<<<<<< HEAD
 
+=======
+.DS_Store
+>>>>>>> da465d058ce2080a3a6123ee16ef2e4439e4a1ec
