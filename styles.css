@@ -50,6 +50,7 @@ section {
 .info {
     color: #808080;
     font-weight: 400;
+    font-family: "Courier New";
 }
 
 .starInfo {
