@@ -77,7 +77,7 @@ a {
     border: 1px solid transparent;
 }
 
-a:hover {
+a:hover, a:focus {
     letter-spacing: 2px;
     transition: 0.5s;
 }
@@ -89,7 +89,7 @@ a:hover {
     color: #871820;
 }
 
-.legoItem a:hover{
+.legoItem a:hover {
     background-color: #871820;
     color: #fbfbfb;
     border: 1px solid #871820;

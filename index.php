@@ -1,5 +1,7 @@
 <?php
 
+require_once 'functions.php';
+
 $db = new PDO('mysql:host=db; dbname=lily-collection', 'root', 'password');
 $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
@@ -8,34 +10,8 @@ $query->execute();
 
 $legoSets = $query->fetchAll();
 
-$displayLego = '';
-foreach($legoSets as $set){
+$displayLego = legoCollection($legoSets);
 
-    if($set['retired'] == 0){
-        $buyLink = "<a href='".$set['buy-URL']."' target='_new'>Buy ". $set['item-name'] . '</a>';
-    } else {
-        $buyLink = "<a class='retired'>Retired Product</a>";
-    }
-
-    if($set['star-rating'] === '5') {
-        $starRating = '	&#9733	&#9733	&#9733	&#9733	&#9733';
-    } elseif ($set['star-rating'] === '4') {
-        $starRating = '	&#9733	&#9733	&#9733	&#9733';
-    } elseif ($set['star-rating'] === '3') {
-        $starRating = '	&#9733	&#9733	&#9733';
-    } elseif ($set['star-rating'] === '2') {
-        $starRating = '	&#9733	&#9733';
-    } elseif ($set['star-rating'] === '1') {
-        $starRating = '	&#9733';
-    }
-
-    $displayLego .=  "<div class='legoItem'><div class='imageSpace'><img src='images/". $set['image-URL']. "' alt='". $set['item-name'] ."'/></div>".
-        "<div><p>Name: <span class='info'>" . $set['item-name'] . '</span></p>' .
-        "<p>Number of pieces: <span class='info'>". $set['number-of-pieces'] . '</span></p>' .
-        "<p>Age Category: <span class='info'>". $set['age-category'] . '</span></p>' .
-        "<p> Star Rating: <span class='starInfo'>$starRating</span></p></div>" .
-        "<div class='buyLink'>$buyLink</div></div>";
-}
 ?>
 
 <!DOCTYPE html>
