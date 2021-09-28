@@ -12,7 +12,7 @@ $displayLego = '';
 foreach($legoSets as $set){
 
     if($set['retired'] == 0){
-        $buyLink = "<a href='".$set['buy-URL']."'>Buy ". $set['item-name'] . '</a>';
+        $buyLink = "<a href='".$set['buy-URL']."' target='_new'>Buy ". $set['item-name'] . '</a>';
     } else {
         $buyLink = "<a class='retired'>Retired Product</a>";
     }
