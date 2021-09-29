@@ -57,3 +57,18 @@ function legoCollection (array $legoSets) : string {
 
     return $displayLego;
 }
+
+/**
+ * Takes data retrieved from `post` and converts special characters
+ * @param array $postArray $_POST
+ * @return array cleansed array
+ */
+function cleanseData(array $postArray) : array {
+    $cleansedArray = [];
+    foreach ($postArray as $key => $postArrayItem) {
+        $cleansedArray[$key] =  htmlspecialchars($postArrayItem);
+    }
+    return $cleansedArray;
+}
+
+

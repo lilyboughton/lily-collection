@@ -1,4 +1,10 @@
 <?php
+    require_once 'functions.php';
+
+    $db = getDB();
+    $cleansedArray = cleanseData($_POST);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -16,72 +22,67 @@
 </header>
 
 <section>
-    <form method='post' action='index.php'>
-        <div class='formItem'>
-            <label for='item-name'>Lego Set Name</label>
-            <input type='text' name='item-name' id='item-name' pattern='[a-zA-Z]+' required />
+    <form method="post" action="addToCollection.php">
+        <div class="formItem">
+            <label for="item-name">Lego Set Name</label>
+            <input type="text" name="item-name" id="item-name" maxlength="255" pattern="[^()/><\][\\\x22,;|]+" required />
         </div>
 
-        <div class='formItem'>
-            <label for='number-of-pieces'>Number of Pieces</label>
-            <input type='number' name='number-of-pieces' id='number-of-pieces' min='0' max='100000' required />
+        <div class="formItem">
+            <label for="number-of-pieces">Number of Pieces</label>
+            <input type="number" name="number-of-pieces" id="number-of-pieces" min="0" max="100000" required class="numberWidth" />
         </div>
 
-        <div class='formItem'>
-            <label for='age-category'>Age Category</label>
-            <input type='text' name='age-category' id='age-category' required />
+        <div class="formItem">
+            <label for="age-category">Age Category</label>
+            <input type="text" name="age-category" id="age-category" maxlength="255" required />
         </div>
 
-        <div class='formItem'>
-            <label for='star-rating'>Rating</label>
+        <div class="formItem">
+            <label for="star-rating">Rating</label>
             <div class="starRating">
                 <div class="starRatingItem">
-                    <p>1 <span class='colourStar'>&#9733</span></p>
-                    <input type='radio' name='star-rating' id='1' />
+                    <p>1 <span class="colourStar">&#9733</span></p>
+                    <input type="radio" name="star-rating" id="1" value="1" />
                 </div>
                 <div class="starRatingItem">
-                    <p>2 <span class='colourStar'>&#9733</span></p>
-                    <input type='radio' name='star-rating' id='2' />
+                    <p>2 <span class="colourStar">&#9733</span></p>
+                    <input type="radio" name="star-rating" id="2" value="2" />
                 </div>
                 <div class="starRatingItem">
-                    <p>3 <span class='colourStar'>&#9733</span></p>
-                    <input type='radio' name='star-rating' id='3' />
+                    <p>3 <span class="colourStar">&#9733</span></p>
+                    <input type="radio" name="star-rating" id="3" value="3" />
                 </div>
 
                 <div class="starRatingItem">
-                    <p>4 <span class='colourStar'>&#9733</span></p>
-                    <input type='radio' name='star-rating' id='4' />
+                    <p>4 <span class="colourStar">&#9733</span></p>
+                    <input type="radio" name="star-rating" id="4" value="4" />
                 </div>
                 <div class="starRatingItem">
-                    <p>5 <span class='colourStar'>&#9733</span></p>
-                    <input type='radio' name='star-rating' id='5' checked />
+                    <p>5 <span class="colourStar">&#9733</span></p>
+                    <input type="radio" name="star-rating" id="5" value="5" checked/>
                 </div>
             </div>
         </div>
 
-        <div class='formItem'>
-            <label for='buy-url'>Where to Buy (URL)</label>
-            <input type='url' name='buy-url' id='buy-url' />
+        <div class="formItem">
+            <label for="buy-url">Where to Buy (URL)</label>
+            <input type="url" name="buy-url" id="buy-url" maxlength="255" />
         </div>
 
-        <div class='formItem'>
-            <label for='image-url'>Lego Set Image (URL)</label>
-            <input type='url' name='image-url' id='image-url' />
-        </div>
-
-        <div class='formItem retiredItem'>
-            <label for='retired'>Is this set retired?</label>
+        <div class="formItem retiredItem">
+            <label for="retired">Is this set retired?</label>
             <div>
                 <p>Yes</p>
-                <input type='radio' name='retired' id='Yes' class="moveRight"/>
+                <input type="radio" name="retired" id="Yes" value="1" class="moveRight"/>
 
                 <p>No</p>
-                <input type='radio' name='retired' id='No' checked  />
+                <input type="radio" name="retired" id="No" value="0" checked  />
             </div>
         </div>
 
-        <div class='submitButton'>
-            <input type='submit' />
+        <div class="submitButton">
+            <input type="submit" value="Submit" />
         </div>
     </form>
 </section>
