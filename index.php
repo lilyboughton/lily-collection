@@ -26,5 +26,9 @@ $displayLego = legoCollection($legoSets);
         <?php echo $displayLego;?>
     </section>
 
+    <footer>
+        <a href="addToCollection.php">Add to the collection -></a>
+    </footer>
+
 </body>
 </html>
