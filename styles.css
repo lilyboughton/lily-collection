@@ -144,6 +144,10 @@ label {
     width: 200px;
 }
 
+.numberWidth {
+    width: 200px;
+}
+
 .starRating {
     width: 209px;
     display: flex;
