@@ -19,17 +19,17 @@
     <form method='post' action='index.php'>
         <div class='formItem'>
             <label for='item-name'>Lego Set Name</label>
-            <input type='text' name='item-name' id='item-name' pattern='' required />
+            <input type='text' name='item-name' id='item-name' pattern='[a-zA-Z]+' required />
         </div>
 
         <div class='formItem'>
             <label for='number-of-pieces'>Number of Pieces</label>
-            <input type='number' name='number-of-pieces' id='number-of-pieces' required />
+            <input type='number' name='number-of-pieces' id='number-of-pieces' min='0' max='100000' required />
         </div>
 
         <div class='formItem'>
             <label for='age-category'>Age Category</label>
-            <input type='text' name='age-category' id='age-category' pattern='' required />
+            <input type='text' name='age-category' id='age-category' required />
         </div>
 
         <div class='formItem'>
