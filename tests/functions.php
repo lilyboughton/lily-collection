@@ -25,7 +25,7 @@ class functions extends TestCase {
     public function testSuccessTwoLegoCollection()
     {
         //expect the result of the test
-        $expected = "<div class='legoItem'><div class='imageSpace'><img src='images/image1' alt='item1'/></div><div><p>Name: <span class='info'>item1</span></p><p>Number of pieces: <span class='info'>100</span></p><p>Age Category: <span class='info'>10</span></p><p>Rating: <span class='starInfo'>	&#9733	&#9733	&#9733	&#9733	&#9733</span></p></div><div class='buyLink'><a href='url1' target='_new'>Buy item1</a></div></div>";
+        $expected = "<div class='legoItem'><div class='imageSpace'><img src='images/image1' alt='item1'/></div><div><p>Name: <span class='info'>item1</span></p><p>Number of pieces: <span class='info'>100</span></p><p>Age Category: <span class='info'>10</span></p><p>Rating: <span class='starInfo'> &#9733 &#9733 &#9733 &#9733 &#9733</span></p></div><div class='buyLink'><a href='url1' target='_new'>Buy item1</a></div></div>";
         //define the input for the test to get the expected result
         $input = [
             ['item-name' => 'item1','image-URL'=> 'image1','number-of-pieces'=>'100','age-category'=>'10','star-rating'=>'5','buy-URL'=>'url1','retired'=>0],
@@ -38,7 +38,7 @@ class functions extends TestCase {
 
 
         public function testFailureLegoCollection() {
-            $expected = 'There is an error with the database, please try again later.';
+            $expected = 'I can\'t find any lego sets at the moment, please try again later.';
             $input = [];
             $case = legoCollection($input);
             $this->assertEquals($expected, $case);

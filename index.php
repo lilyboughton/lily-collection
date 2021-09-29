@@ -2,14 +2,8 @@
 
 require_once 'functions.php';
 
-$db = new PDO('mysql:host=db; dbname=lily-collection', 'root', 'password');
-$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-$query = $db->prepare("SELECT `item-name`,`image-URL`,`number-of-pieces`,`age-category`,`star-rating`,`buy-URL`,`retired` FROM `lego-sets`");
-$query->execute();
-
-$legoSets = $query->fetchAll();
-
+$db = getDB();
+$legoSets = retrieveLegoSets($db);
 $displayLego = legoCollection($legoSets);
 
 ?>
@@ -31,10 +25,6 @@ $displayLego = legoCollection($legoSets);
     <section>
         <?php echo $displayLego;?>
     </section>
-
-    <footer>
-        <a href="#">Add to the collection -></a>
-    </footer>
 
 </body>
 </html>
