@@ -6,7 +6,7 @@ if(formSubmitted($_POST)===1) {
     $cleansedArray = cleanseData($_POST);
 
     if (checkItemExists($cleansedArray, $db) === 1 || $cleansedArray === ['Error: please try again']) {
-        $errorDuplicate = '<section class="error"><p>There seems to be an error, please try again.</p></section>';
+        $errorMessage = '<section class="error"><p>There seems to be an error, please try again.</p></section>';
     } else {
         insertToDatabase($cleansedArray, $db);
         header('Location: index.php');
@@ -96,8 +96,8 @@ if(formSubmitted($_POST)===1) {
 </section>
 
     <?php
-    if(isset($errorDuplicate)) {
-        echo $errorDuplicate;
+    if(isset($errorMessage)) {
+        echo $errorMessage;
     }
     ?>
 
