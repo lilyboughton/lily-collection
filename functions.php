@@ -110,11 +110,5 @@ function insertToDatabase (array $itemArray, PDO $db) {
     $retired = $itemArray['retired'];
 
     $addItem = $db->prepare("INSERT INTO `lego-sets` (`item-name`,`number-of-pieces`,`age-category`,`star-rating`,`buy-URL`,`retired`) VALUES (:itemName, :pieces, :age, :rating, :buy, :retired);");
-    $addItem->bindParam(':itemName', $name);
-    $addItem->bindParam(':pieces', $pieces);
-    $addItem->bindParam(':age', $age);
-    $addItem->bindParam(':rating', $rating);
-    $addItem->bindParam(':buy', $buy);
-    $addItem->bindParam(':retired', $retired);
-    $addItem->execute();
+    $addItem->execute(['itemName'=>$name, 'pieces'=>$pieces, 'age'=>$age, 'rating'=>$rating, 'buy'=>$buy, 'retired'=>$retired]);
 }
