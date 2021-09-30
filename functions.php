@@ -102,7 +102,11 @@ function insertToDatabase (array $itemArray, PDO $db) {
     $pieces = $itemArray['number-of-pieces'];
     $age = $itemArray['age-category'];
     $rating = $itemArray['star-rating'];
-    $buy = $itemArray['buy-url'];
+    if($itemArray['buy-url']===''){
+        $buy = 'https://www.lego.com/en-gb/themes/harry-potter';
+    } else {
+        $buy = $itemArray['buy-url'];
+    }
     $retired = $itemArray['retired'];
 
     $addItem = $db->prepare("INSERT INTO `lego-sets` (`item-name`,`number-of-pieces`,`age-category`,`star-rating`,`buy-URL`,`retired`) VALUES (:itemName, :pieces, :age, :rating, :buy, :retired);");
