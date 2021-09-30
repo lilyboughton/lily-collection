@@ -49,9 +49,16 @@ class functions extends TestCase {
         $this->assertEquals($expected, $case);
     }
 
-    public function testFailureCleanseData() {
-        $input = ['this string has no special characters'];
+    public function testSuccessTwoCleanseData() {
         $expected = ['this string has no special characters'];
+        $input = ['this string has no special characters'];
+        $case = cleanseData($input);
+        $this->assertEquals($expected, $case);
+    }
+
+    public function testFailureCleanseData() {
+        $expected =['Error: please try again'];
+        $input = [['and'=>'&'],['lessThan'=>'<']];
         $case = cleanseData($input);
         $this->assertEquals($expected, $case);
     }
@@ -60,5 +67,32 @@ class functions extends TestCase {
         $input = 3;
         $this->expectException(TypeError::class);
         cleanseData($input);
+    }
+
+    public function testSuccessFormSubmitted() {
+        $expected = 1;
+        $input = ['item-name' => 'item1','number-of-pieces'=>'100','age-category'=>'10','star-rating'=>'5','retired'=>0];
+        $case = formSubmitted($input);
+        $this->assertEquals($expected, $case);
+    }
+
+    public function testFailureFormSubmitted() {
+        $expected = 0;
+        $input = [];
+        $case = formSubmitted($input);
+        $this->assertEquals($expected, $case);
+    }
+
+    public function testFailureTwoFormSubmitted() {
+        $expected = 0;
+        $input = ['greeting'=>'hello'];
+        $case = formSubmitted($input);
+        $this->assertEquals($expected, $case);
+    }
+
+    public function testMalformedFormSubmitted() {
+        $input = 3;
+        $this->expectException(TypeError::class);
+        formSubmitted($input);
     }
 }

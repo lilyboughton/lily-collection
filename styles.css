@@ -214,6 +214,11 @@ input {
     color: #808080;
 }
 
+.error {
+    border: none;
+    background-color: #fbfbfb;
+}
+
 @media screen and (max-width: 580px) {
     header img {
         height: auto;

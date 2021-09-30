@@ -1,12 +1,12 @@
 <?php
 require_once 'functions.php';
 
-$db = getDB();
-$cleansedArray = cleanseData($_POST);
+if(formSubmitted($_POST)===1) {
+    $db = getDB();
+    $cleansedArray = cleanseData($_POST);
 
-if(!empty($cleansedArray)) {
-    if (checkItemExists($cleansedArray, $db) != []) {
-        echo '<p>This item already exists in the collection.</p>';
+    if (checkItemExists($cleansedArray, $db) === 1 || $cleansedArray === ['Error: please try again']) {
+        $errorDuplicate = '<section class="error"><p>There seems to be an error, please try again.</p></section>';
     } else {
         insertToDatabase($cleansedArray, $db);
         header('Location: index.php');
@@ -94,6 +94,12 @@ if(!empty($cleansedArray)) {
         </div>
     </form>
 </section>
+
+    <?php
+    if(isset($errorDuplicate)) {
+        echo $errorDuplicate;
+    }
+    ?>
 
 <footer>
     <a href="index.php">Go back to the collection -></a>

@@ -58,6 +58,13 @@ function legoCollection (array $legoSets) : string {
     return $displayLego;
 }
 
+function formSubmitted(array $itemArray) : int {
+    if (isset($itemArray['item-name']) && isset($itemArray['number-of-pieces']) && isset($itemArray['age-category']) && isset($itemArray['star-rating']) && isset($itemArray['retired'])) {
+        return 1;
+    }
+    return 0;
+}
+
 /**
  * Takes data retrieved from `post` and converts special characters
  * @param array $postArray $_POST
@@ -66,7 +73,12 @@ function legoCollection (array $legoSets) : string {
 function cleanseData(array $postArray) : array {
     $cleansedArray = [];
     foreach ($postArray as $key => $postArrayItem) {
-        $cleansedArray[$key] =  htmlspecialchars($postArrayItem);
+        if (is_string($postArrayItem)){
+        $cleansedArray[$key] = htmlspecialchars($postArrayItem);
+        }
+        else {
+            return ['Error: please try again'];
+        }
     }
     return $cleansedArray;
 }
@@ -77,18 +89,18 @@ function cleanseData(array $postArray) : array {
  * @param PDO $db database 'lily-collection'
  * @return array empty array returned if item not found
  */
-function checkItemExists(array $itemArray, PDO $db) : array {
+function checkItemExists(array $itemArray, PDO $db) : int {
     $name = $itemArray['item-name'];
 
     $findItem = $db->prepare("SELECT `item-name`,`image-URL`,`number-of-pieces`,`age-category`,`star-rating`,`buy-URL`,`retired` FROM `lego-sets` WHERE `item-name`= :itemName AND `deleted`=0");
     $findItem->bindParam(':itemName',$name);
     $findItem->execute();
-    $item=$findItem->fetch();
+    $item = $findItem->fetch();
 
     if($item == []) {
-        return [];
+        return 0;
     }
-    return $item;
+    return 1;
 }
 
 /**
@@ -98,17 +110,11 @@ function checkItemExists(array $itemArray, PDO $db) : array {
  */
 function insertToDatabase (array $itemArray, PDO $db) {
 
-    $name = $itemArray['item-name'];
-    $pieces = $itemArray['number-of-pieces'];
-    $age = $itemArray['age-category'];
-    $rating = $itemArray['star-rating'];
-    if($itemArray['buy-url']===''){
-        $buy = 'https://www.lego.com/en-gb/themes/harry-potter';
+    if($itemArray['buy-url']!=''){
+        $addItem = $db->prepare("INSERT INTO `lego-sets` (`item-name`,`number-of-pieces`,`age-category`,`star-rating`,`buy-URL`,`retired`) VALUES (:itemName, :pieces, :age, :rating, :buy, :retired);");
+        $addItem->execute(['itemName'=>$itemArray['item-name'], 'pieces'=>$itemArray['number-of-pieces'], 'age'=>$itemArray['age-category'], 'rating'=>$itemArray['star-rating'], 'buy'=>$itemArray['buy-url'], 'retired'=>$itemArray['retired']]);
     } else {
-        $buy = $itemArray['buy-url'];
+        $addItem = $db->prepare("INSERT INTO `lego-sets` (`item-name`,`number-of-pieces`,`age-category`,`star-rating`, `retired`) VALUES (:itemName, :pieces, :age, :rating, :retired);");
+        $addItem->execute(['itemName'=>$itemArray['item-name'], 'pieces'=>$itemArray['number-of-pieces'], 'age'=>$itemArray['age-category'], 'rating'=>$itemArray['star-rating'],  'retired'=>$itemArray['retired']]);
     }
-    $retired = $itemArray['retired'];
-
-    $addItem = $db->prepare("INSERT INTO `lego-sets` (`item-name`,`number-of-pieces`,`age-category`,`star-rating`,`buy-URL`,`retired`) VALUES (:itemName, :pieces, :age, :rating, :buy, :retired);");
-    $addItem->execute(['itemName'=>$name, 'pieces'=>$pieces, 'age'=>$age, 'rating'=>$rating, 'buy'=>$buy, 'retired'=>$retired]);
 }
