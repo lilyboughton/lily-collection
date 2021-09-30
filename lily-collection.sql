@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.35)
 # Database: lily-collection
-# Generation Time: 2021-09-28 09:59:43 +0000
+# Generation Time: 2021-09-30 12:56:56 +0000
 # ************************************************************
 
 
@@ -35,20 +35,21 @@ CREATE TABLE `lego-sets` (
   `star-rating` enum('5','4','3','2','1') NOT NULL DEFAULT '5',
   `buy-URL` varchar(255) DEFAULT 'https://www.lego.com/en-gb/themes/harry-potter',
   `retired` tinyint(1) DEFAULT '0',
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `lego-sets` WRITE;
 /*!40000 ALTER TABLE `lego-sets` DISABLE KEYS */;
 
-INSERT INTO `lego-sets` (`id`, `item-name`, `image-URL`, `number-of-pieces`, `age-category`, `star-rating`, `buy-URL`, `retired`)
+INSERT INTO `lego-sets` (`id`, `item-name`, `image-URL`, `number-of-pieces`, `age-category`, `star-rating`, `buy-URL`, `retired`, `deleted`)
 VALUES
-	(1,'Hogwarts Castle','hogwartsCastle.png',6020,'16+','5','https://www.lego.com/en-gb/product/hogwarts-castle-71043',0),
-	(2,'Diagon Alley','diagonAlley1.png',5544,'16+','4','https://www.lego.com/en-gb/product/diagon-alley-75978',0),
-	(3,'Hogwarts Express','hogwartsExpress.png',801,'8-14','4','https://www.lego.com/en-gb/product/hogwarts-express-75955',0),
-	(4,'The Knight Bus','knightBus.png',403,'8+','4','https://www.lego.com/en-gb/product/the-knight-bus-75957',0),
-	(5,'Quidditch Match','quidditchMatch.png',500,'7-14','4','https://www.lego.com/en-gb/product/quidditch-match-75956',1),
-	(6,'Attack on the Burrow','theBurrow.png',1047,'9+','4','https://www.lego.com/en-gb/product/attack-on-the-burrow-75980',0);
+	(1,'Hogwarts Castle','hogwartsCastle.png',6020,'16+','5','https://www.lego.com/en-gb/product/hogwarts-castle-71043',0,0),
+	(2,'Diagon Alley','diagonAlley1.png',5544,'16+','4','https://www.lego.com/en-gb/product/diagon-alley-75978',0,0),
+	(3,'Hogwarts Express','hogwartsExpress.png',801,'8-14','4','https://www.lego.com/en-gb/product/hogwarts-express-75955',0,0),
+	(4,'The Knight Bus','knightBus.png',403,'8+','4','https://www.lego.com/en-gb/product/the-knight-bus-75957',0,0),
+	(5,'Quidditch Match','quidditchMatch.png',500,'7-14','4','https://www.lego.com/en-gb/product/quidditch-match-75956',1,0),
+	(6,'Attack on the Burrow','theBurrow.png',1047,'9+','4','https://www.lego.com/en-gb/product/attack-on-the-burrow-75980',0,0);
 
 /*!40000 ALTER TABLE `lego-sets` ENABLE KEYS */;
 UNLOCK TABLES;

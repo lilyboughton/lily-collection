@@ -16,7 +16,7 @@ function getDB() : PDO {
  * @return array data from 'lego-sets' table
  */
 function retrieveLegoSets(PDO $db) : array {
-    $query = $db->prepare("SELECT `item-name`,`image-URL`,`number-of-pieces`,`age-category`,`star-rating`,`buy-URL`,`retired` FROM `lego-sets`");
+    $query = $db->prepare("SELECT `item-name`,`image-URL`,`number-of-pieces`,`age-category`,`star-rating`,`buy-URL`,`retired` FROM `lego-sets` WHERE `deleted`=0");
     $query->execute();
     return $query->fetchAll();
 }
@@ -56,4 +56,65 @@ function legoCollection (array $legoSets) : string {
     }
 
     return $displayLego;
+}
+
+function formSubmitted(array $itemArray) : int {
+    if (isset($itemArray['item-name']) && isset($itemArray['number-of-pieces']) && isset($itemArray['age-category']) && isset($itemArray['star-rating']) && isset($itemArray['retired'])) {
+        return 1;
+    }
+    return 0;
+}
+
+/**
+ * Takes data retrieved from `post` and converts special characters
+ * @param array $postArray $_POST
+ * @return array cleansed array
+ */
+function cleanseData(array $postArray) : array {
+    $cleansedArray = [];
+    foreach ($postArray as $key => $postArrayItem) {
+        if (is_string($postArrayItem)){
+        $cleansedArray[$key] = htmlspecialchars($postArrayItem);
+        }
+        else {
+            return ['Error: please try again'];
+        }
+    }
+    return $cleansedArray;
+}
+
+/**
+ * Checks if the item already exists in the database based on name
+ * @param array $itemArray cleansed array
+ * @param PDO $db database 'lily-collection'
+ * @return array empty array returned if item not found
+ */
+function checkItemExists(array $itemArray, PDO $db) : int {
+    $name = $itemArray['item-name'];
+
+    $findItem = $db->prepare("SELECT `item-name`,`image-URL`,`number-of-pieces`,`age-category`,`star-rating`,`buy-URL`,`retired` FROM `lego-sets` WHERE `item-name`= :itemName AND `deleted`=0");
+    $findItem->bindParam(':itemName',$name);
+    $findItem->execute();
+    $item = $findItem->fetch();
+
+    if($item == []) {
+        return 0;
+    }
+    return 1;
+}
+
+/**
+ * Inserts data into database if it doesn't already exist
+ * @param array $itemArray cleansed array
+ * @param PDO $db database 'lily-collection'
+ */
+function insertToDatabase (array $itemArray, PDO $db) {
+
+    if($itemArray['buy-url']!=''){
+        $addItem = $db->prepare("INSERT INTO `lego-sets` (`item-name`,`number-of-pieces`,`age-category`,`star-rating`,`buy-URL`,`retired`) VALUES (:itemName, :pieces, :age, :rating, :buy, :retired);");
+        $addItem->execute(['itemName'=>$itemArray['item-name'], 'pieces'=>$itemArray['number-of-pieces'], 'age'=>$itemArray['age-category'], 'rating'=>$itemArray['star-rating'], 'buy'=>$itemArray['buy-url'], 'retired'=>$itemArray['retired']]);
+    } else {
+        $addItem = $db->prepare("INSERT INTO `lego-sets` (`item-name`,`number-of-pieces`,`age-category`,`star-rating`, `retired`) VALUES (:itemName, :pieces, :age, :rating, :retired);");
+        $addItem->execute(['itemName'=>$itemArray['item-name'], 'pieces'=>$itemArray['number-of-pieces'], 'age'=>$itemArray['age-category'], 'rating'=>$itemArray['star-rating'],  'retired'=>$itemArray['retired']]);
+    }
 }
