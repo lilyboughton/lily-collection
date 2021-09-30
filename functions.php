@@ -16,7 +16,7 @@ function getDB() : PDO {
  * @return array data from 'lego-sets' table
  */
 function retrieveLegoSets(PDO $db) : array {
-    $query = $db->prepare("SELECT `item-name`,`image-URL`,`number-of-pieces`,`age-category`,`star-rating`,`buy-URL`,`retired` FROM `lego-sets`");
+    $query = $db->prepare("SELECT `item-name`,`image-URL`,`number-of-pieces`,`age-category`,`star-rating`,`buy-URL`,`retired` FROM `lego-sets` WHERE `deleted`=0");
     $query->execute();
     return $query->fetchAll();
 }
@@ -71,4 +71,46 @@ function cleanseData(array $postArray) : array {
     return $cleansedArray;
 }
 
+/**
+ * Checks if the item already exists in the database based on name
+ * @param array $itemArray cleansed array
+ * @param PDO $db database 'lily-collection'
+ * @return array empty array returned if item not found
+ */
+function checkItemExists(array $itemArray, PDO $db) : array {
+    $name = $itemArray['item-name'];
 
+    $findItem = $db->prepare("SELECT `item-name`,`image-URL`,`number-of-pieces`,`age-category`,`star-rating`,`buy-URL`,`retired` FROM `lego-sets` WHERE `item-name`= :itemName AND `deleted`=0");
+    $findItem->bindParam(':itemName',$name);
+    $findItem->execute();
+    $item=$findItem->fetch();
+
+    if($item == []) {
+        return [];
+    }
+    return $item;
+}
+
+/**
+ * Inserts data into database if it doesn't already exist
+ * @param array $itemArray cleansed array
+ * @param PDO $db database 'lily-collection'
+ */
+function insertToDatabase (array $itemArray, PDO $db) {
+
+    $name = $itemArray['item-name'];
+    $pieces = $itemArray['number-of-pieces'];
+    $age = $itemArray['age-category'];
+    $rating = $itemArray['star-rating'];
+    $buy = $itemArray['buy-url'];
+    $retired = $itemArray['retired'];
+
+    $addItem = $db->prepare("INSERT INTO `lego-sets` (`item-name`,`number-of-pieces`,`age-category`,`star-rating`,`buy-URL`,`retired`) VALUES (:itemName, :pieces, :age, :rating, :buy, :retired);");
+    $addItem->bindParam(':itemName', $name);
+    $addItem->bindParam(':pieces', $pieces);
+    $addItem->bindParam(':age', $age);
+    $addItem->bindParam(':rating', $rating);
+    $addItem->bindParam(':buy', $buy);
+    $addItem->bindParam(':retired', $retired);
+    $addItem->execute();
+}

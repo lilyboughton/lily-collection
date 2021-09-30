@@ -1,9 +1,17 @@
 <?php
-    require_once 'functions.php';
+require_once 'functions.php';
 
-    $db = getDB();
-    $cleansedArray = cleanseData($_POST);
+$db = getDB();
+$cleansedArray = cleanseData($_POST);
 
+if(!empty($cleansedArray)) {
+    if (checkItemExists($cleansedArray, $db) != []) {
+        echo '<p>This item already exists in the collection.</p>';
+    } else {
+        insertToDatabase($cleansedArray, $db);
+        header('Location: index.php');
+    }
+}
 
 ?>
 
@@ -72,7 +80,7 @@
 
         <div class="formItem retiredItem">
             <label for="retired">Is this set retired?</label>
-            <div>
+            <div class="retiredWidth">
                 <p>Yes</p>
                 <input type="radio" name="retired" id="Yes" value="1" class="moveRight"/>
 
@@ -93,3 +101,4 @@
 
 </body>
 </html>
+

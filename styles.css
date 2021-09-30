@@ -241,4 +241,12 @@ input {
     .starRating {
         width: auto;
     }
+
+    .numberWidth{
+        width: auto;
+    }
+
+    .retiredItem div {
+        width: auto;
+    }
 }
