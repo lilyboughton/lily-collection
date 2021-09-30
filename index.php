@@ -12,6 +12,7 @@ $displayLego = legoCollection($legoSets);
 <html lang="en-GB">
 <head>
     <title>HP Lego</title>
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon.ico"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="normalize.css" type="text/css">
     <link rel="stylesheet" href="styles.css" type="text/css">
